@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grade 8 Computer Subject - Homework Tracker</title>
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  body {
+    background-color: #f4f6f9;
+    color: #1f2937;
+    padding: 25px;
+  }
+
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+  }
+
+  /* Header Section */
+  .header {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    color: #ffffff;
+    padding: 24px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  .header-title h1 {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+
+  .header-title p {
+    font-size: 14px;
+    color: #cbd5e1;
+    margin-top: 4px;
+  }
+
+  .date-badge {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  /* 4-Column Board Grid */
+  .board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 25px;
+    background-color: #f8fafc;
+  }
+
+  @media (max-width: 1024px) {
+    .board {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .board {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Tier Cards */
+  .tier-card {
+    background: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tier-header {
+    padding: 16px 18px;
+    color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .tier-header h2 {
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+
+  .tier-desc {
+    padding: 10px 16px;
+    font-size: 12.5px;
+    font-weight: 600;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .count-pill {
+    background: rgba(255, 255, 255, 0.25);
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  /* Color Themes for Each Tier */
+  /* 1. Superstars */
+  .superstars .tier-header { background: linear-gradient(135deg, #059669, #10b981); }
+  .superstars .tier-desc { background-color: #ecfdf5; color: #065f46; }
+  .superstars tr:hover { background-color: #f0fdf4; }
+
+  /* 2. Stars */
+  .stars .tier-header { background: linear-gradient(135deg, #2563eb, #3b82f6); }
+  .stars .tier-desc { background-color: #eff6ff; color: #1e40af; }
+  .stars tr:hover { background-color: #f8fafc; }
+
+  /* 3. Class */
+  .class-tier .tier-header { background: linear-gradient(135deg, #d97706, #f59e0b); }
+  .class-tier .tier-desc { background-color: #fffbeb; color: #92400e; }
+  .class-tier tr:hover { background-color: #fefce8; }
+
+  /* 4. Blacklist */
+  .blacklist .tier-header { background: linear-gradient(135deg, #dc2626, #ef4444); }
+  .blacklist .tier-desc { background-color: #fef2f2; color: #991b1b; }
+  .blacklist tr:hover { background-color: #fef2f2; }
+
+  /* Table Styling */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 14.5px;
+    font-weight: 500;
+    color: #1e293b;
+  }
+
+  td.num {
+    width: 40px;
+    font-weight: 700;
+    color: #64748b;
+    text-align: center;
+    border-right: 1px solid #f1f5f9;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  /* Footer */
+  .footer {
+    background: #ffffff;
+    padding: 15px 30px;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #64748b;
+  }
+
+  @media print {
+    body { background: #ffffff; padding: 0; }
+    .container { box-shadow: none; border: none; }
+    .board { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Header -->
+  <div class="header">
+    <div class="header-title">
+      <h1>GRADE 8 — COMPUTER SUBJECT</h1>
+      <p>Homework Performance &amp; Student Evaluation Board</p>
+    </div>
+    <div class="date-badge" contenteditable="true" title="Click to edit date">
+      Date: Wednesday, Nov 25, 2026
+    </div>
+  </div>
+
+  <!-- 4-Tier Tracking Board -->
+  <div class="board">
+
+    <!-- 1. SUPERSTARS -->
+    <div class="tier-card superstars">
+      <div class="tier-header">
+        <h2>★ Superstars</h2>
+        <span class="count-pill">6</span>
+      </div>
+      <div class="tier-desc">Everything worked completely &amp; accurately</div>
+      <table contenteditable="true">
+        <tr><td class="num">1</td><td>Robel Michael Haile Tsegay</td></tr>
+        <tr><td class="num">2</td><td>Shingirwa Weld Esous Ghergis Hadrekenel</td></tr>
+        <tr><td class="num">3</td><td>Nesiba Nuredin Abdulkadir Seid</td></tr>
+        <tr><td class="num">4</td><td>Rimana Solomon Eyob Hagos</td></tr>
+        <tr><td class="num">5</td><td>Reem Bokri Tesfay Selay</td></tr>
+        <tr><td class="num">6</td><td>Renda Osman Saleh Seadin</td></tr>
+        <tr><td class="num">7</td><td>Moubarik Mohamed Daher Duali</td></tr>
+        <tr><td class="num">8</td><td>Fertuna Tesfay Girmay Gebru</td></tr>
+      </table>
+    </div>
+
+    <!-- 2. STARS -->
+    <div class="tier-card stars">
+      <div class="tier-header">
+        <h2>☆ Stars</h2>
+        <span class="count-pill">2</span>
+      </div>
+      <div class="tier-desc">Worked beautifully with minor mistakes</div>
+      <table contenteditable="true">
+        <tr><td class="num"></td><td></td></tr>
+        <tr><td class="num"></td><td></td></tr>
+      </table>
+    </div>
+
+    <!-- 3. CLASS -->
+    <div class="tier-card class-tier">
+      <div class="tier-header">
+        <h2>● Class</h2>
+        <span class="count-pill">2</span>
+      </div>
+      <div class="tier-desc">Normal / Medium level homework</div>
+      <table contenteditable="true">
+        <tr><td class="num">1</td><td>Warda Idris Mohammed</td></tr>
+        <tr><td class="num">2</td><td>Slatial Haftoum Tesfu Weldu</td></tr>
+      </table>
+    </div>
+
+    <!-- 4. BLACKLIST -->
+    <div class="tier-card blacklist">
+      <div class="tier-header">
+        <h2>✖ Blacklist</h2>
+        <span class="count-pill">9</span>
+      </div>
+      <div class="tier-desc">Did NOT work their homework</div>
+      <table contenteditable="true">
+        <tr><td class="num">1</td><td>Newal Bashir Hagag Osman</td></tr>
+        <tr><td class="num">2</td><td>Asmait Mahari Haile Gebremariam</td></tr>
+        <tr><td class="num">3</td><td>Hayat Saleh Gaber Osman</td></tr>
+        <tr><td class="num">4</td><td>Nebil Adam Osman Idris</td></tr>
+        <tr><td class="num">5</td><td>Eldani Dinar Andemariam Habtu</td></tr>
+        <tr><td class="num">6</td><td>Hafiza Mohammad Ferej Yassin</td></tr>
+        <tr><td class="num">7</td><td>Sergo Eyob Ghebremeskel Hamed</td></tr>
+        <tr><td class="num">8</td><td>Nurdain Sied Nasser Soud</td></tr>
+        <tr><td class="num">9</td><td>Betiel Temesgen Andemichael Tekle</td></tr>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <span><strong>Total Students:</strong> 19</span>
+    <span>Tip: Click on the date or any student cell to edit directly on screen.</span>
+  </div>
+</div>
+
+</body>
+</html>
